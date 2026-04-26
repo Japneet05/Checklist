@@ -310,8 +310,6 @@
   }
 
   @media (max-width: 480px) {
-    .badge-cal { display: none; }
-    .meal-detail { display: none; }
     .totals-grid { grid-template-columns: 1fr; }
     .total-cell { border-right: none; border-bottom: 1px solid var(--border); }
     .total-cell:last-child { border-bottom: none; }
@@ -363,7 +361,13 @@ const MEALS = [
     name: "Protein Oat Bowl",
     cal: "~720 kcal",
     protein: "~45g P",
-    detail: "Oats 100g · Milk 300ml · Whey 30g · Honey 20g · Milo 30g"
+    ingredients: [
+      { name: "Rolled oats (dry)", amount: "100g" },
+      { name: "Whole milk", amount: "300ml" },
+      { name: "Whey protein powder", amount: "30g (1 scoop)" },
+      { name: "Honey", amount: "20g" },
+      { name: "Milo cereal", amount: "30g" },
+    ]
   },
   {
     id: "snack1",
@@ -371,7 +375,11 @@ const MEALS = [
     name: "Desk Snack",
     cal: "~420 kcal",
     protein: "~28g P",
-    detail: "Greek yogurt 250g · Honey 15g · Pub mix nuts 40g"
+    ingredients: [
+      { name: "Greek yogurt / dahi", amount: "250g" },
+      { name: "Honey", amount: "15g" },
+      { name: "Pub mix nuts", amount: "40g" },
+    ]
   },
   {
     id: "lunch",
@@ -379,7 +387,11 @@ const MEALS = [
     name: "Butter Chicken Paneer",
     cal: "~750 kcal",
     protein: "~42g P",
-    detail: "Paneer 200g · Butter chicken sauce 150g · Garlic naan 1 piece"
+    ingredients: [
+      { name: "Paneer (cubed)", amount: "200g" },
+      { name: "Butter chicken jar sauce", amount: "150g" },
+      { name: "Garlic naan", amount: "1 piece" },
+    ]
   },
   {
     id: "snack2",
@@ -387,7 +399,12 @@ const MEALS = [
     name: "Paneer & Yogurt Snack",
     cal: "~400 kcal",
     protein: "~27g P",
-    detail: "Paneer 100g · Greek yogurt 150g · Honey 15g · Pub mix nuts 30g"
+    ingredients: [
+      { name: "Paneer (room temp)", amount: "100g" },
+      { name: "Greek yogurt / dahi", amount: "150g" },
+      { name: "Honey", amount: "15g" },
+      { name: "Pub mix nuts", amount: "30g" },
+    ]
   },
   {
     id: "dinner",
@@ -395,7 +412,12 @@ const MEALS = [
     name: "Big Paneer Naan Dinner",
     cal: "~670 kcal",
     protein: "~20g P",
-    detail: "Paneer 150g · Butter chicken sauce 150g · Garlic naan 2 pieces · Greek yogurt 100g"
+    ingredients: [
+      { name: "Paneer (cubed)", amount: "150g" },
+      { name: "Butter chicken jar sauce", amount: "150g" },
+      { name: "Garlic naan", amount: "2 pieces" },
+      { name: "Greek yogurt (raita side)", amount: "100g" },
+    ]
   }
 ];
 
@@ -453,13 +475,20 @@ function render() {
             <span class="meal-time">${meal.time}</span>
             <span class="meal-name">${meal.name}</span>
           </div>
-          <div class="meal-detail">${meal.detail}</div>
         </div>
         <div class="meal-right">
           <span class="badge badge-cal">${meal.cal}</span>
           <span class="badge badge-p">${meal.protein}</span>
         </div>
       </div>
+      <ul class="ing-list">
+        ${meal.ingredients.map(ing => `
+          <li class="ing-row">
+            <span class="ing-name">${ing.name}</span>
+            <span class="ing-amount">${ing.amount}</span>
+          </li>
+        `).join('')}
+      </ul>
     `;
     container.appendChild(section);
   });
